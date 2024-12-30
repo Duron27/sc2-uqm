@@ -26,6 +26,7 @@ find_package(SDL2 REQUIRED)
 find_package(OpenAL REQUIRED)
 find_package(ZLIB REQUIRED)
 find_package(PNG REQUIRED)
+find_package(Threads REQUIRED)
 
 include_directories(src)
 include_directories(src/libs/lua)
@@ -33,7 +34,7 @@ include_directories(${SDL2_INCLUDE_DIRS})
 include_directories(${PNG_INCLUDE_DIRS})
 include_directories(cmake)
 
-add_definitions(-DDEBUG -DGFXMODULE_SDL -DUSE_INTERNAL_MIKMOD -DUSE_INTERNAL_LUA)
+add_definitions(-DDEBUG -DGFXMODULE_SDL -DUSE_INTERNAL_MIKMOD -DUSE_INTERNAL_LUA -DTHREADLIB_PTHREAD)
 
 file(GLOB gameFiles src/*.c src/uqm/*.c src/uqm/supermelee/*.c src/libs/uio/stdio/*.c)
 file(GLOB_RECURSE sourceFiles src/uqm/ships/*.c src/uqm/planets/*.c src/uqm/lua/*.c src/uqm/comm/*.c)
@@ -47,13 +48,20 @@ foreach(f charhashtable.c defaultfs.c fstypes.c hashtable.c io.c mount.c paths.c
     list(APPEND libFiles "src/libs/uio/${f}")
 endforeach()
 
+if (MSVC)
+    set(THREAD_IMPLEMENTATION sdl)
+else()
+    set(THREAD_IMPLEMENTATION pthread)
+endif()
+
 file(GLOB logFiles src/libs/log/msgbox_stub.c src/libs/log/uqmlog.c)
+file(GLOB threadFiles src/libs/threads/*.c src/libs/threads/${THREAD_IMPLEMENTATION}/*.c)
 
 if (EMSCRIPTEN)
     set(CMAKE_EXECUTABLE_SUFFIX ".html")
 
 #    set(linkFlags "-s DISABLE_EXCEPTION_CATCHING=1 -s TOTAL_MEMORY=2032MB --shell-file ${CMAKE_CURRENT_LIST_DIR}/src/tiny_chess_shell.html --js-library ${CMAKE_CURRENT_LIST_DIR}/src/library_unicode.js")
-    set(linkFlags "${linkFlags} -s DISABLE_EXCEPTION_CATCHING=1 -s TOTAL_MEMORY=2032MB -s ASMFS=1 -s -s OFFSCREENCANVAS_SUPPORT=0 -s OFFSCREEN_FRAMEBUFFER=1 --profiling-funcs")
+    set(linkFlags "${linkFlags} -s USE_PTHREADS=1 -s DISABLE_EXCEPTION_CATCHING=1 -s TOTAL_MEMORY=2032MB -s PTHREAD_POOL_SIZE=4 -s ASMFS=1 -s PROXY_TO_PTHREAD=1 -s OFFSCREENCANVAS_SUPPORT=0 -s OFFSCREEN_FRAMEBUFFER=1 --threadprofiler --profiling-funcs")
 
     set(linkFlags "${linkFlags} -s DISABLE_EXCEPTION_CATCHING=1 -s TOTAL_MEMORY=256MB")
 #    set(linkFlagsDebug "-s GL_DEBUG=1 -g2")
@@ -61,7 +69,7 @@ endif()
 
 # Check for Android
 if (ANDROID)
-    add_library(uqm SHARED ${sourceFiles} ${gameFiles} ${libFiles} ${logFiles})
+    add_library(uqm SHARED ${sourceFiles} ${gameFiles} ${libFiles} ${threadFiles} ${logFiles})
 else()
     add_executable(uqm ${sourceFiles} ${gameFiles} ${libFiles} ${threadFiles} ${logFiles})
 endif()
@@ -69,8 +77,8 @@ endif()
 set_target_properties(uqm PROPERTIES LINK_FLAGS_DEBUG "${linkFlagsDebug} ${linkFlags}")
 set_target_properties(uqm PROPERTIES LINK_FLAGS_RELEASE "${linkFlags}")
 
-target_link_libraries(uqm PRIVATE SDL2::SDL2 SDL2::SDL2main ${LIBOGG} ${LIBVORBIS} ${LIBVORBISFILE} OpenAL::OpenAL ZLIB::ZLIB PNG::PNG m)
+target_link_libraries(uqm PRIVATE SDL2::SDL2 SDL2::SDL2main ${LIBOGG} ${LIBVORBIS} ${LIBVORBISFILE} OpenAL::OpenAL ZLIB::ZLIB PNG::PNG m Threads::Threads)
 
-if (NOT MSVC)
+if (NOT MSVC AND NOT ANDROID)
     target_link_libraries(uqm PRIVATE m)
 endif()
