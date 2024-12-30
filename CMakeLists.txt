@@ -26,7 +26,6 @@ find_package(SDL2 REQUIRED)
 find_package(OpenAL REQUIRED)
 find_package(ZLIB REQUIRED)
 find_package(PNG REQUIRED)
-find_package(Threads REQUIRED)
 
 include_directories(src)
 include_directories(src/libs/lua)
@@ -77,7 +76,7 @@ endif()
 set_target_properties(uqm PROPERTIES LINK_FLAGS_DEBUG "${linkFlagsDebug} ${linkFlags}")
 set_target_properties(uqm PROPERTIES LINK_FLAGS_RELEASE "${linkFlags}")
 
-target_link_libraries(uqm PRIVATE SDL2::SDL2 SDL2::SDL2main ${LIBOGG} ${LIBVORBIS} ${LIBVORBISFILE} OpenAL::OpenAL ZLIB::ZLIB PNG::PNG m pthread Threads::Threads)
+target_link_libraries(uqm PRIVATE SDL2::SDL2 SDL2::SDL2main ${LIBOGG} ${LIBVORBIS} ${LIBVORBISFILE} OpenAL::OpenAL ZLIB::ZLIB PNG::PNG m pthread)
 
 if (NOT MSVC)
     target_link_libraries(uqm PRIVATE m pthread)
