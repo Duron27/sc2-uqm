@@ -47,9 +47,9 @@
 #include "options.h"
 #include "uqmversion.h"
 #include "uqm/comm.h"
+#include "libs/alarm.h"
 #ifdef NETPLAY
 #	include "libs/callback.h"
-#	include "libs/alarm.h"
 #	include "libs/net.h"
 #	include "uqm/supermelee/netplay/netoptions.h"
 #	include "uqm/supermelee/netplay/netplay.h"
@@ -228,8 +228,11 @@ static const char *choiceOptString (const struct int_option *option);
 static const char *boolOptString (const struct bool_option *option);
 static const char *boolNotOptString (const struct bool_option *option);
 
-int
-main (int argc, char *argv[])
+#ifdef ANDROID
+extern "C" int SDL_main(int argc, char** argv)
+#else
+int main (int argc, char *argv[])
+#endif
 {
 	struct options_struct options = {
 		/* .logFile = */            NULL,
