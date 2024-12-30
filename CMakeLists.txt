@@ -76,7 +76,7 @@ endif()
 set_target_properties(uqm PROPERTIES LINK_FLAGS_DEBUG "${linkFlagsDebug} ${linkFlags}")
 set_target_properties(uqm PROPERTIES LINK_FLAGS_RELEASE "${linkFlags}")
 
-target_link_libraries(uqm PRIVATE SDL2::SDL2 SDL2::SDL2main ${LIBOGG} ${LIBVORBIS} ${LIBVORBISFILE} OpenAL::OpenAL ZLIB::ZLIB PNG::PNG m pthread)
+target_link_libraries(uqm PRIVATE SDL2::SDL2 SDL2::SDL2main ${LIBOGG} ${LIBVORBIS} ${LIBVORBISFILE} OpenAL::OpenAL ZLIB::ZLIB PNG::PNG m pthread ${CMAKE_THREAD_LIBS_INIT})
 
 if (NOT MSVC)
     target_link_libraries(uqm PRIVATE m pthread)
