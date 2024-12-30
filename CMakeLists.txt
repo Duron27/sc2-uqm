@@ -54,7 +54,7 @@ else()
 endif()
 
 file(GLOB logFiles src/libs/log/msgbox_stub.c src/libs/log/uqmlog.c)
-file(GLOB threadFiles src/libs/threads/*.c src/libs/threads/${THREAD_IMPLEMENTATION}/*.c)
+
 
 if (EMSCRIPTEN)
     set(CMAKE_EXECUTABLE_SUFFIX ".html")
