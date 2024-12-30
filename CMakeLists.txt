@@ -68,7 +68,7 @@ endif()
 
 # Check for Android
 if (ANDROID)
-    add_library(uqm SHARED ${sourceFiles} ${gameFiles} ${libFiles} ${threadFiles} ${logFiles})
+    add_library(uqm SHARED ${sourceFiles} ${gameFiles} ${libFiles} ${logFiles})
 else()
     add_executable(uqm ${sourceFiles} ${gameFiles} ${libFiles} ${threadFiles} ${logFiles})
 endif()
