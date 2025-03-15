@@ -229,7 +229,7 @@ static const char *boolOptString (const struct bool_option *option);
 static const char *boolNotOptString (const struct bool_option *option);
 
 #ifdef ANDROID
-extern int SDL_main(int argc, char** argv)
+int SDL_main(int argc, char** argv)
 #else
 int main(int argc, char** argv)
 #endif
