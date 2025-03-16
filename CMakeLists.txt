@@ -78,7 +78,7 @@ endif()
 set_target_properties(uqm PROPERTIES LINK_FLAGS_DEBUG "${linkFlagsDebug} ${linkFlags}")
 set_target_properties(uqm PROPERTIES LINK_FLAGS_RELEASE "${linkFlags}")
 
-target_link_libraries(uqm PRIVATE SDL2::SDL2 SDL2::SDL2main ${LIBOGG} ${LIBVORBIS} ${LIBVORBISFILE} OpenAL::OpenAL ZLIB::ZLIB PNG::PNG m Threads::Threads)
+target_link_libraries(uqm PRIVATE SDL2::SDL2 ${LIBOGG} ${LIBVORBIS} ${LIBVORBISFILE} OpenAL::OpenAL ZLIB::ZLIB PNG::PNG m Threads::Threads)
 
 if (NOT MSVC AND NOT ANDROID)
     target_link_libraries(uqm PRIVATE m)
