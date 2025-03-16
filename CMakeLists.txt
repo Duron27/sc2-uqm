@@ -26,6 +26,7 @@ find_package(SDL2 REQUIRED)
 find_package(OpenAL REQUIRED)
 find_package(ZLIB REQUIRED)
 find_package(PNG REQUIRED)
+find_package(OpenGL REQUIRED)
 find_package(Threads REQUIRED)
 
 include_directories(src)
