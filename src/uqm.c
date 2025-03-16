@@ -57,6 +57,9 @@
 #include "uqm/setup.h"
 #include "uqm/starcon.h"
 
+#ifdef ANDROID
+#	include "SDL_main.h"
+#endif
 
 #if defined (GFXMODULE_SDL)
 #	include SDL_INCLUDE(SDL.h)
