@@ -7,8 +7,8 @@
  * manually if you want anything else than the defaults.
  */
 
-#ifndef CONFIG_UNIX_H_
-#define CONFIG_UNIX_H_
+#ifndef CONFIG_ANDROID_H_
+#define CONFIG_ANDROID_H_
 
 /* Directory where the UQM game data is located */
 #define CONTENTDIR "uqm/"
@@ -62,5 +62,5 @@
 /* Defined if your system has _Bool of its own */
 #define HAVE__BOOL
 
-#endif  /* CONFIG_UNIX_H_ */
+#endif  /* CONFIG_ANDROID_H_ */
 
