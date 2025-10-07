@@ -11,22 +11,22 @@
 #define CONFIG_ANDROID_H_
 
 /* Directory where the UQM game data is located */
-#define CONTENTDIR "uqm/"
+#define CONTENTDIR "/storage/emulated/0/alpha3/resources/uqm/"
 
 /* Directory where game data will be stored */
-#define USERDIR "config/"
+#define USERDIR "/storage/emulated/0/alpha3/config/"
 
 /* Directory where config files will be stored */
 #define CONFIGDIR USERDIR
 
 /* Directory where supermelee teams will be stored */
-#define MELEEDIR "teams/"
+#define MELEEDIR "/storage/emulated/0/alpha3/teams/"
 
 /* Directory where save games will be stored */
-#define SAVEDIR "save/"
+#define SAVEDIR "/storage/emulated/0/alpha3/save/"
 
 /* Directory where screenshots will be stored */
-#define SCRSHOTDIR "screenshots/"
+#define SCRSHOTDIR "/storage/emulated/0/alpha3/screenshots/"
 
 /* Defined if words are stored with the most significant byte first */
 #undef WORDS_BIGENDIAN
