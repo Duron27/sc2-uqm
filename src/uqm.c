@@ -280,6 +280,15 @@ int main(int argc, char** argv)
 	int gfxFlags;
 	int i;
 
+#ifdef ANDROID
+	// Always enable logging on Android to specific path
+	options.logFile = "/storage/emulated/0/alpha3/config/uqm_log.txt";
+	// Always enable OpenGL on Android and use libng_gl4es.so
+	options.opengl.value = true;
+	options.opengl.set = true;
+	options.graphicsBackend = "libng_gl4es.so";
+#endif
+
 	// NOTE: we cannot use the logging facility yet because we may have to
 	//   log to a file, and we'll only get the log file name after parsing
 	//   the options.
