@@ -287,6 +287,7 @@ int main(int argc, char** argv)
 	options.opengl.value = true;
 	options.opengl.set = true;
 	options.graphicsBackend = "libng_gl4es.so";
+	options.contentDir = "/storage/emulated/0/alpha3/resources/uqm";
 #endif
 
 	// NOTE: we cannot use the logging facility yet because we may have to
