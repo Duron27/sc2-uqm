@@ -282,11 +282,9 @@ int main(int argc, char** argv)
 
 #ifdef ANDROID
 	// Always enable logging on Android to specific path
-	options.logFile = "/storage/emulated/0/alpha3/config/uqm_log.txt";
-	// Always enable OpenGL on Android and use libng_gl4es.so
+	options.logFile = "/storage/emulated/0/alpha3/config/uqm_log.txt";	
 	options.opengl.value = true;
-	options.opengl.set = true;
-	options.graphicsBackend = "libng_gl4es.so";
+	options.opengl.set = true;	
 	options.contentDir = "/storage/emulated/0/alpha3/resources/uqm";
 	options.configDir = "/storage/emulated/0/alpha3/config";	
 #endif
