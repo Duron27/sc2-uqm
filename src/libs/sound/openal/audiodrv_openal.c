@@ -310,6 +310,7 @@ openAL_GetSourcei (audio_Object srcobj, audio_SourceProp pname,
 		audio_IntVal *value)
 {
 	alGetSourcei ((ALuint) srcobj, (ALenum) pname, (ALint *) value);
+	log_add(log_Debug, "openAL_GetSourcei: pname=%x, raw value=%x", pname, *value);
 	if (pname == AL_SOURCE_STATE)
 	{
 		switch (*value)

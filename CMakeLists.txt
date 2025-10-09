@@ -26,7 +26,6 @@ find_package(SDL2 REQUIRED)
 find_package(OpenAL REQUIRED)
 find_package(ZLIB REQUIRED)
 find_package(PNG REQUIRED)
-find_package(OpenGL REQUIRED)
 find_package(Threads REQUIRED)
 
 include_directories(src)
@@ -35,7 +34,7 @@ include_directories(${SDL2_INCLUDE_DIRS})
 include_directories(${PNG_INCLUDE_DIRS})
 include_directories(cmake)
 
-add_definitions(-DDEBUG -DGFXMODULE_SDL -DUSE_INTERNAL_MIKMOD -DUSE_INTERNAL_LUA -DTHREADLIB_PTHREAD)
+add_definitions(-DDEBUG -DGFXMODULE_SDL -DUSE_INTERNAL_MIKMOD -DUSE_INTERNAL_LUA -DTHREADLIB_PTHREAD -DHAVE_OPENAL)
 
 file(GLOB gameFiles src/*.c src/uqm/*.c src/uqm/supermelee/*.c src/libs/uio/stdio/*.c)
 file(GLOB_RECURSE sourceFiles src/uqm/ships/*.c src/uqm/planets/*.c src/uqm/lua/*.c src/uqm/comm/*.c)

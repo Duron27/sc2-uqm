@@ -50,40 +50,59 @@ initAudio (sint32 driver, sint32 flags)
 {
 	sint32 ret;
 
-#ifdef HAVE_OPENAL
-	if (driver == audio_DRIVER_MIXSDL)
-		ret = mixSDL_Init (&audiodrv, flags);
-	else if (driver == audio_DRIVER_OPENAL)
-		ret = openAL_Init (&audiodrv, flags);
-	else
-		ret = noSound_Init (&audiodrv, flags);
-#else
+	log_add(log_Info, "Initializing audio driver: %d (OpenAL=%d, MixSDL=%d, NoSound=%d)",
+			driver, audio_DRIVER_OPENAL, audio_DRIVER_MIXSDL, audio_DRIVER_NOSOUND);
+
+	#ifdef HAVE_OPENAL
+	if (driver == audio_DRIVER_OPENAL) {
+		log_add(log_Info, "Attempting to initialize OpenAL");
+		ret = openAL_Init(&audiodrv, flags);
+		if (ret != 0) {
+			log_add(log_Error, "OpenAL initialization failed, falling back to MixSDL");
+			ret = mixSDL_Init(&audiodrv, flags);
+		} else {
+			log_add(log_Info, "Successfully initialized OpenAL");
+		}
+	} else if (driver == audio_DRIVER_MIXSDL) {
+		log_add(log_Info, "Initializing MixSDL");
+		ret = mixSDL_Init(&audiodrv, flags);
+	} else {
+		log_add(log_Info, "Initializing NoSound");
+		ret = noSound_Init(&audiodrv, flags);
+	}
+	#else
 	if (driver == audio_DRIVER_OPENAL)
 	{
-		log_add (log_Warning, "OpenAL driver not compiled in, so using MixSDL");
+		log_add(log_Warning, "OpenAL driver not compiled in, so using MixSDL");
 		driver = audio_DRIVER_MIXSDL;
 	}
 	if (driver == audio_DRIVER_MIXSDL)
-		ret = mixSDL_Init (&audiodrv, flags);
+	{
+		log_add(log_Info, "Initializing MixSDL");
+		ret = mixSDL_Init(&audiodrv, flags);
+	}
 	else
-		ret = noSound_Init (&audiodrv, flags);
-#endif
+	{
+		log_add(log_Info, "Initializing NoSound");
+		ret = noSound_Init(&audiodrv, flags);
+	}
+	#endif
 
 	if (ret != 0)
 	{
-		log_add (log_Fatal, "Sound driver initialization failed.\n"
-				"This may happen when a soundcard is "
-				"not present or not available.\n"
-				"NOTICE: Try running UQM with '--sound=none' option");
-		exit (EXIT_FAILURE);
+		log_add(log_Fatal, "Sound driver initialization failed.\n"
+		"This may happen when a soundcard is "
+		"not present or not available.\n"
+		"NOTICE: Try running UQM with '--sound=none' option");
+		exit(EXIT_FAILURE);
 	}
 
-	SetSFXVolume (sfxVolumeScale);
-	SetSpeechVolume (speechVolumeScale);
-	SetMusicVolume (musicVolume);
-	
+	SetSFXVolume(sfxVolumeScale);
+	SetSpeechVolume(speechVolumeScale);
+	SetMusicVolume(musicVolume);
+
 	audio_inited = true;
-	
+
 	return ret;
 }
 

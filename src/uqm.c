@@ -282,11 +282,14 @@ int main(int argc, char** argv)
 
 #ifdef ANDROID
 	// Always enable logging on Android to specific path
-	options.logFile = "/storage/emulated/0/alpha3/config/uqm_log.txt";	
+	options.logFile = "/storage/emulated/0/alpha3/uqm/uqm_log.txt";
 	options.opengl.value = true;
-	options.opengl.set = true;	
-	options.contentDir = "/storage/emulated/0/alpha3/resources/uqm";
-	options.configDir = "/storage/emulated/0/alpha3/config";	
+	options.opengl.set = true;
+	options.contentDir = "/storage/emulated/0/alpha3/uqm/content";
+	options.configDir = "/storage/emulated/0/alpha3/uqm";
+	// Set audio driver to OpenAL
+	//options.soundDriver.value = audio_DRIVER_OPENAL;
+	//options.soundDriver.set = true;
 #endif
 
 	// NOTE: we cannot use the logging facility yet because we may have to

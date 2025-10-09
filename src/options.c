@@ -299,7 +299,7 @@ prepareMeleeDir (void) {
 	meleeDirName = getenv("UQM_MELEE_DIR");
 	if (meleeDirName == NULL)
 		meleeDirName = MELEEDIR;
-	
+
 	if (expandPath (buf, PATH_MAX - 13, meleeDirName, EP_ALL_SYSTEM) == -1)
 	{
 		// Doesn't have to be fatal, but might mess up things when saving
@@ -316,12 +316,12 @@ prepareMeleeDir (void) {
 		exit (EXIT_FAILURE);
 
 	meleeDir = uio_openDirRelative (configDir, "teams", 0);
-			// TODO: this doesn't work if the save dir is not
-			//       "teams" in the config dir.
+	// TODO: this doesn't work if the save dir is not
+	//       "teams" in the config dir.
 	if (meleeDir == NULL)
 	{
 		log_add (log_Fatal, "Fatal error: Could not open melee teams dir: %s",
-				strerror (errno));
+				 strerror (errno));
 		exit (EXIT_FAILURE);
 	}
 }
